@@ -9,13 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: cbf9be6308aa7e1b1e2cd327d7df479ea582646a
+          ref: aaff60fa6d1d34d5d81cb4e41635fbea23fe0898
           fetch-depth: 0
           persist-credentials: false
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.4
       - run: bun install --frozen-lockfile
+      - run: bun test packages/ai/test/cursor-caller-headers.test.ts
       - name: Run repository check
         run: |
           git update-ref refs/remotes/upstream/main 84f5adc3bbfc0c2a7caecbad78b1b6eedf0a2939
