@@ -16,6 +16,12 @@ jobs:
         with:
           bun-version: 1.4.4
       - run: bun install --frozen-lockfile
+      - name: Install matching native addon
+        run: |
+          work=$(mktemp -d)
+          npm pack @oh-my-pi/pi-natives-linux-x64@18.20.0 --pack-destination "$work"
+          tar -xzf "$work/oh-my-pi-pi-natives-linux-x64-18.20.0.tgz" -C "$work"
+          cp "$work"/package/*.node packages/natives/native/
       - run: bun test packages/ai/test/cursor-caller-headers.test.ts
       - name: Run repository check
         run: |
